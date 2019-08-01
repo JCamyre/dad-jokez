@@ -29,6 +29,10 @@ def incoming_sms():
     body = str(request.values.get('Body', type=str)).strip().lower()
     incoming_number = str(request.values.get('From', type=str))
 
+    # only supported for US users '+15551234567'
+    if len(incoming_number) != 12 and incoming_number[:2] != '+1':
+        return
+
     if body == 'daily' and does_number_exist(incoming_number) is False:
         # add to db
         add_to_sub_list(incoming_number)
@@ -36,7 +40,7 @@ def incoming_sms():
         # remove from db
         remove_from_sub_list(incoming_number)
 
-    # stop sending
+    # send nothing on STOP
     if body == 'stop':
         return
 
