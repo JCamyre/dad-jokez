@@ -9,6 +9,9 @@ def get_dad_joke():
 
 
 def handle_response(body):
+    if body == 'stop':
+        return
+
     handler = {
         'dad': get_dad_joke(),
         'daily': 'Thank you for signing up for your daily dose of dad jokes. '
