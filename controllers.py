@@ -13,13 +13,14 @@ def handle_response(body):
         return
 
     handler = {
-        'dad': get_dad_joke(),
+        'dad': 'This service no longer provides dad jokes on command. If you\'d like to receive an automated dad joke '
+               'once a day, reply DAILY. To stop receiving messages completely, reply STOP',
         'daily': 'Thank you for signing up for your daily dose of dad jokes. '
                  'To opt out at any time, reply 9 or STOP',
 
         # Twilio's API handles STOP and HELP responses, so these will do
         '9': 'You are unsubscribed from the daily dad jokes. Reply 7 for help',
-        '7': 'Dad Jokes:\n\nYou may reply DAD for one random dad joke. If you\'d like to receive an automated dad joke'
+        '7': 'Dad Jokes:\n\nIf you\'d like to receive an automated dad joke'
              ' once a day, reply DAILY. To stop receiving messages completely, reply STOP'
     }
 
