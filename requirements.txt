@@ -6,3 +6,4 @@ pymongo[tls,srv]==3.8.0
 apscheduler==3.6.1
 python-dotenv==0.10.3
 dnspython==1.16.0
+zappa==0.48.2

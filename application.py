@@ -36,6 +36,10 @@ def incoming_sms():
         # remove from db
         remove_from_sub_list(incoming_number)
 
+    # stop sending
+    if body == 'stop':
+        return
+
     resp = MessagingResponse()
     resp.message(handle_response(body))
 
