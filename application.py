@@ -29,7 +29,8 @@ def incoming_sms():
     incoming_number = str(request.values.get('From', type=str))
     resp = MessagingResponse()
 
-    opt_out_keywords = ['stop', 'stopall', 'unsubscribe', 'cancel', 'end', 'quit']
+    opt_out_keywords = ['stop', 'stopall',
+                        'unsubscribe', 'cancel', 'end', 'quit']
     help_keywords = ['help', 'info']
 
     # only supported for US users. example: '+15551234567'
