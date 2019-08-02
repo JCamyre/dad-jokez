@@ -1,7 +1,5 @@
 # Dad Jokez
-
-Send a text message.. receive a dad joke!
-Text 'dad' to (202) 410-4710. And for one automated joke a day, text 'daily'.
+For one automated dad joke a day, text 'dad' to 202-410-4710
 
 ## Built With
 

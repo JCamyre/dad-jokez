@@ -1,5 +1,4 @@
 """Dad joke generator"""
-import os
 from db import does_number_exist, add_to_sub_list, remove_from_sub_list
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
@@ -16,36 +15,50 @@ def send():
     print('Daily jokes sent to subscribers')
 
 
-scheduler = BackgroundScheduler(timezone='utc', daemon=True)
-scheduler.add_job(send, trigger='cron', hour='16', minute='00')
+scheduler = BackgroundScheduler(timezone='UTC', daemon=True)
 scheduler.start()
 
+scheduler.add_job(send, trigger='cron', hour='16', minute='00')
 
 application = Flask(__name__)
 
 
 @application.route('/dad', methods=['GET', 'POST'])
 def incoming_sms():
-    body = str(request.values.get('Body', type=str)).strip().lower()
+    incoming_msg = str(request.values.get('Body', type=str)).strip().lower()
     incoming_number = str(request.values.get('From', type=str))
-
-    # only supported for US users '+15551234567'
-    if len(incoming_number) != 12 and incoming_number[:2] != '+1':
-        return
-
-    if body == 'daily' and does_number_exist(incoming_number) is False:
-        # add to db
-        add_to_sub_list(incoming_number)
-    elif (body == 'stop' or body == '9') and does_number_exist(incoming_number) is True:
-        # remove from db
-        remove_from_sub_list(incoming_number)
-
-    # send nothing on STOP
-    if body == 'stop':
-        return
-
     resp = MessagingResponse()
-    resp.message(handle_response(body))
+
+    opt_out_keywords = ['stop', 'stopall', 'unsubscribe', 'cancel', 'end', 'quit']
+    help_keywords = ['help', 'info']
+
+    # only supported for US users. example: '+15551234567'
+    if len(incoming_number) != 12 and incoming_number[:2] != '+1':
+        return ''
+
+    # Twilio handles help keywords
+    if incoming_msg in help_keywords:
+        return ''
+
+    if incoming_msg == 'dad':
+        # check if number is already on sub list
+        if does_number_exist(incoming_number):
+            resp.message('You\'ve already subscribed to daily dad jokes.')
+        else:
+            add_to_sub_list(incoming_number)
+            resp.message(handle_response(incoming_msg))
+    elif incoming_msg in opt_out_keywords or incoming_msg == '9':
+        # remove from db if number exists
+        if does_number_exist(incoming_number):
+            remove_from_sub_list(incoming_number)
+
+        # Twilio handles 'stop' commands, so responses won't be sent
+        if incoming_msg == '9':
+            resp.message(handle_response(incoming_msg))
+        else:
+            return ''
+    else:
+        resp.message(handle_response(incoming_msg))
 
     return str(resp)
 
