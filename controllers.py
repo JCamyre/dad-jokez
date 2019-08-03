@@ -35,3 +35,12 @@ def send_daily_message(message_client: Client, outgoing_number: str):
                 from_=outgoing_number,
                 to=subscriber_number
             )
+
+
+def is_number_valid(phone_number: str):
+    if len(phone_number) != 12:
+        return False
+    if phone_number[:2] != '+1':
+        return False
+
+    return True

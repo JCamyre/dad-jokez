@@ -2,8 +2,9 @@
 from db import does_number_exist, add_to_sub_list, remove_from_sub_list
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.voice_response import VoiceResponse
 from twilio.rest import Client
-from controllers import handle_response, send_daily_message
+from controllers import handle_response, send_daily_message, is_number_valid
 from apscheduler.schedulers.background import BackgroundScheduler
 from settings import auth_token, outgoing_number, account_sid
 
@@ -34,7 +35,7 @@ def incoming_sms():
     help_keywords = ['help', 'info']
 
     # only supported for US users. example: '+15551234567'
-    if len(incoming_number) != 12 and incoming_number[:2] != '+1':
+    if not is_number_valid(incoming_number):
         return ''
 
     # Twilio handles help keywords
@@ -62,6 +63,10 @@ def incoming_sms():
         resp.message(handle_response(incoming_msg))
 
     return str(resp)
+
+
+# @application.route('/call', methods=['GET', 'POST'])
+# def incoming_call:
 
 
 if __name__ == "__main__":
