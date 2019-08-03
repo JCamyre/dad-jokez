@@ -69,7 +69,7 @@ def incoming_call():
     """Respond to incoming calls with a brief message"""
     resp = VoiceResponse()
     resp.say(
-        "Thanks for calling! Text dad for your daily does of dad jokes!", voice="alice"
+        "Thanks for calling! Text dad for your daily dose of dad jokes!", voice="alice"
     )
 
     return str(resp)
