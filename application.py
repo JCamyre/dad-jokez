@@ -30,9 +30,7 @@ def incoming_sms():
     incoming_number = str(request.values.get("From", type=str))
     resp = MessagingResponse()
 
-    opt_out_keywords = [
-        "stop", "stopall", "unsubscribe", "cancel", "end", "quit"
-    ]
+    opt_out_keywords = ["stop", "stopall", "unsubscribe", "cancel", "end", "quit"]
     help_keywords = ["help", "info"]
 
     # only supported for US users. example: '+15551234567'
@@ -70,8 +68,9 @@ def incoming_sms():
 def incoming_call():
     """Respond to incoming calls with a brief message"""
     resp = VoiceResponse()
-    resp.say("Thanks for calling! Text dad for your daily does of dad jokes!",
-             voice="alice")
+    resp.say(
+        "Thanks for calling! Text dad for your daily does of dad jokes!", voice="alice"
+    )
 
     return str(resp)
 
