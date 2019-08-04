@@ -1,6 +1,7 @@
 import requests
 from db import db
 from twilio.rest import Client
+import datetime
 
 
 def get_dad_joke():
@@ -24,7 +25,10 @@ def handle_response(incoming_msg: str):
 
 def send_daily_message(message_client: Client, outgoing_number: str):
     joke = get_dad_joke()
-    message = f"Daily Dad Joke:\n\n{joke}"
+    today = datetime.date.today()
+    month = today.month
+    day = today.day
+    message = f"Daily Dad Joke - {month}/{day}:\n\n{joke}"
 
     for sub in db.sub_list.find():
         subscriber_number = sub["number"]
