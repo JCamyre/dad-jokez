@@ -1,0 +1,1 @@
+web: gunicorn application:dad-jokez
