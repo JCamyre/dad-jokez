@@ -24,11 +24,12 @@ def handle_response(incoming_msg: str):
 
 
 def send_daily_message(message_client: Client, outgoing_number: str):
-    joke = get_dad_joke()
+    # joke = get_dad_joke()
+    joke = "Did you hear about Andrew's retirement? It's safe to say the Colts ran out of Luck."
 
     # prevent duplicate jokes
-    while does_joke_exist(joke):
-        joke = get_dad_joke()
+    # while does_joke_exist(joke):
+    #     joke = get_dad_joke()
     
     add_joke_to_db(joke)
     
