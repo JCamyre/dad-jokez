@@ -1,5 +1,5 @@
 # Dad Jokez
-For one automated dad joke a day, text 'dad' to 202-410-4710
+For one automated dad joke a day, text 'dad' to ~~202-410-4710~~ (archived)
 
 ## Built With
 
